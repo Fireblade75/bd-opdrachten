@@ -5,12 +5,12 @@ import com.example.bankapp.exceptions.UnknownBankAccountException;
 
 import java.util.*;
 
-public class BankManager {
+public class Bank {
     private static final double INTEREST_RATE = 0.05;
     private static final String COUNTRY_CODE = "NL";
     private static final String BANK_CODE = "BANK";
-    HashMap<Iban, BankAccount> bankAccounts = new HashMap<>();
-    ArrayList<Customer> customers = new ArrayList<>();
+    private final Map<Iban, BankAccount> bankAccounts = new HashMap<>();
+    private final List<Customer> customers = new ArrayList<>();
     static int nextCustomerId = 0;
 
     public Customer addCustomer(String firstName, String lastName) {
@@ -32,10 +32,10 @@ public class BankManager {
     public void transferMoney(Iban from, Iban to, double amount) {
         BankAccount fromAccount = bankAccounts.get(from);
         BankAccount toAccount = bankAccounts.get(to);
-        if(fromAccount == null || toAccount == null) {
+        if (fromAccount == null || toAccount == null) {
             throw new UnknownBankAccountException();
         } else {
-            if(fromAccount.withdraw(amount)) {
+            if (fromAccount.withdraw(amount)) {
                 toAccount.deposit(amount);
             } else {
                 throw new BankTransferFailedException();
@@ -44,18 +44,17 @@ public class BankManager {
     }
 
     public void applyInterest() {
-        for(Map.Entry<Iban, BankAccount> bankAccountEntry : bankAccounts.entrySet()) {
+        for (Map.Entry<Iban, BankAccount> bankAccountEntry : bankAccounts.entrySet()) {
             bankAccountEntry.getValue().applyInterest();
         }
     }
 
     public double getBalance(Iban accountNumber) {
-        BankAccount bankAccount = bankAccounts.get(accountNumber);
-        if(bankAccount == null) {
-            throw new UnknownBankAccountException();
-        } else {
-            return bankAccount.getBalance();
-        }
+        // Vraag alle bank accounts op met het opgegeven Iban (0 tot 1) en loop daar over heen met getBalance
+        //
+        return Optional.ofNullable(bankAccounts.get(accountNumber))
+                .map(BankAccount::getBalance)
+                .orElseThrow(UnknownBankAccountException::new);
     }
 
     public double getInterestRate() {
@@ -65,7 +64,7 @@ public class BankManager {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(Map.Entry<Iban, BankAccount> bankAccountEntry : bankAccounts.entrySet()) {
+        for (Map.Entry<Iban, BankAccount> bankAccountEntry : bankAccounts.entrySet()) {
             BankAccount bankAccount = bankAccountEntry.getValue();
             sb.append(String.format("%s - Interest next year: %.2f%n", bankAccount.toString(), bankAccount.calculateInterest()));
         }
@@ -73,8 +72,8 @@ public class BankManager {
     }
 
     public Customer getCustomer(int customerId) {
-        for(Customer c : customers) {
-            if(c.getCustomerId() == customerId) {
+        for (Customer c : customers) {
+            if (c.getCustomerId() == customerId) {
                 return c;
             }
         }
@@ -83,13 +82,14 @@ public class BankManager {
 
     /**
      * Find a customer by searching by name
+     *
      * @param firstName the first name of the customer
-     * @param lastName the last name of the customer
+     * @param lastName  the last name of the customer
      * @return the customer or null if not found
      */
     public Customer getCustomer(String firstName, String lastName) {
-        for(Customer c : customers) {
-            if(c.getFirstName().equals(firstName) && c.getLastName().equals(lastName)) {
+        for (Customer c : customers) {
+            if (c.getFirstName().equals(firstName) && c.getLastName().equals(lastName)) {
                 return c;
             }
         }
@@ -99,7 +99,7 @@ public class BankManager {
     public List<Iban> getBankAccountsByCustomer(Customer customer) {
         ArrayList<Iban> ibans = new ArrayList<>();
         for (var entry : bankAccounts.entrySet()) {
-            if(entry.getValue().getCustomers().contains(customer)) {
+            if (entry.getValue().getCustomers().contains(customer)) {
                 ibans.add(entry.getKey());
             }
         }

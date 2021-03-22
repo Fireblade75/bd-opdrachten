@@ -1,6 +1,6 @@
 package com.example.bankapp.cli;
 
-import com.example.bankapp.BankManager;
+import com.example.bankapp.Bank;
 import com.example.bankapp.Customer;
 import com.example.bankapp.Iban;
 import com.example.bankapp.exceptions.InvalidIbanException;
@@ -10,19 +10,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BankAccountCommands {
-    public static String transfer(BankManager bankManager, String[] words) {
+    public static String transfer(Bank bank, String[] words) {
         if (words.length != 4) {
             return "Usage: transfer from[IBAN] to[IBAN] amount[double]";
         } else {
             Iban fromIban = Iban.parseIban(words[1]);
             Iban toIban = Iban.parseIban(words[2]);
             double amount = Double.parseDouble(words[3]);
-            bankManager.transferMoney(fromIban, toIban, amount);
+            bank.transferMoney(fromIban, toIban, amount);
             return String.format("Transferred %.02f from %s to %s", amount, fromIban.toString(), toIban.toString());
         }
     }
 
-    public static String createNewAccount(BankManager bankManager, String[] words) {
+    public static String createNewAccount(Bank bank, String[] words) {
         if (words.length != 4) {
             return "Usage: createAccount customerId IBAN balance";
         }
@@ -31,12 +31,12 @@ public class BankAccountCommands {
             Iban iban = Iban.parseIban(words[2]);
             double balance = Double.parseDouble(words[3]);
 
-            Customer customer = bankManager.getCustomer(customerId);
+            Customer customer = bank.getCustomer(customerId);
             if (customer == null) {
                 return "Customer not found";
             }
 
-            bankManager.addAccount(customer, iban, balance);
+            bank.addAccount(customer, iban, balance);
             return "Created bank account with IBAN " + iban.toString();
         } catch (NumberFormatException e) {
             return "Could not parse numeric input variables";
@@ -45,13 +45,13 @@ public class BankAccountCommands {
         }
     }
 
-    public static String getBalance(BankManager bankManager, String[] words) {
+    public static String getBalance(Bank bank, String[] words) {
         if (words.length != 2) {
             return "Usage: balance IBAN";
         }
         try {
             Iban iban = Iban.parseIban(words[1]);
-            double balance = bankManager.getBalance(iban);
+            double balance = bank.getBalance(iban);
             return String.format("%s has a balance of €%.02f", iban.toString(), balance);
         } catch (InvalidIbanException e) {
             return "Could not parse the given IBAN";
@@ -60,17 +60,17 @@ public class BankAccountCommands {
         }
     }
 
-    public static String getAccounts(BankManager bankManager, String[] words) {
+    public static String getAccounts(Bank bank, String[] words) {
         if (words.length != 2) {
             return "Usage: getAccounts customerId";
         }
         try {
             int customerId = Integer.parseInt(words[1]);
-            Customer customer = bankManager.getCustomer(customerId);
+            Customer customer = bank.getCustomer(customerId);
             if(customer == null) {
                 return "Customer not found";
             } else {
-                List<Iban> ibans = bankManager.getBankAccountsByCustomer(customer);
+                List<Iban> ibans = bank.getBankAccountsByCustomer(customer);
                 if(ibans.size() > 0) {
                     return "- " + ibans.stream().map(Iban::toString).collect(Collectors.joining("\n- "));
                 }

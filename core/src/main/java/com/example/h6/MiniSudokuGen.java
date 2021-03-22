@@ -28,6 +28,14 @@ public class MiniSudokuGen {
         return sudoku;
     }
 
+    private List<Integer> generateIntegerList(int n) {
+        ArrayList<Integer> values = new ArrayList<>(n);
+        for (int i = 1; i <= n; i++) {
+            values.add(n);
+        }
+        return values;
+    }
+
     public static void main(String[] args) {
         MiniSudokuGen miniSudokuGen = new MiniSudokuGen();
         var sudoku = miniSudokuGen.generateSudoku();
