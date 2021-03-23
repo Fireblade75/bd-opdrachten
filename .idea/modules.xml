@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bank-app/bank-app.iml" filepath="$PROJECT_DIR$/bank-app/bank-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mocking/mocking.iml" filepath="$PROJECT_DIR$/mocking/mocking.iml" />
       <module fileurl="file://$PROJECT_DIR$/opdrachten.iml" filepath="$PROJECT_DIR$/opdrachten.iml" />
     </modules>
   </component>

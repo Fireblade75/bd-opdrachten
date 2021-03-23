@@ -36,6 +36,11 @@
                 <version>${jline.version}</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.8.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -95,5 +100,6 @@
     <modules>
         <module>core</module>
         <module>bank-app</module>
+        <module>mocking</module>
     </modules>
 </project>

@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="core" />
         <module name="bank-app" />
+        <module name="mocking" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bank-app" target="11" />
       <module name="core" target="11" />
+      <module name="mocking" target="11" />
       <module name="opdrachten" target="11" />
     </bytecodeTargetLevel>
   </component>
