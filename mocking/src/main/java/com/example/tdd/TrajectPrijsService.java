@@ -1,8 +1,9 @@
 package com.example.tdd;
 
 public class TrajectPrijsService {
-    private final TrajectEenhedenNaarPrijsService trajectEenhedenNaarPrijsService;
-    private final TrajectNaarTrajectEenhedenService trajectNaarTrajectEenhedenService;
+
+    private TrajectEenhedenNaarPrijsService trajectEenhedenNaarPrijsService;
+    private TrajectNaarTrajectEenhedenService trajectNaarTrajectEenhedenService;
 
     public TrajectPrijsService(TrajectEenhedenNaarPrijsService trajectEenhedenNaarPrijsService, TrajectNaarTrajectEenhedenService trajectNaarTrajectEenhedenService) {
         this.trajectEenhedenNaarPrijsService = trajectEenhedenNaarPrijsService;
