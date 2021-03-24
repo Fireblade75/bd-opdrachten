@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class ReceiptReader {
-    private final Pattern pattern = Pattern.compile("\\[([a-zA-Z]+):\\$(\\d+(?:\\.\\d\\d?)?)\\]");
-    private final double taxes;
+    private final Pattern pattern = Pattern.compile("\\[([a-zA-Z]+):(\\d):\\$(\\d+(?:\\.\\d\\d?)?)\\]");
+
     private final FileReader fileReader;
+    private TaxCalculator taxCalculator;
 
     public ReceiptReader(double taxes, FileReader fileReader) {
-        this.taxes = taxes;
+        this.taxCalculator = new TaxCalculator(taxes);
         this.fileReader = fileReader;
     }
 
@@ -22,7 +23,8 @@ public class ReceiptReader {
                 throw new LineError(line);
             }
             String itemName = match.group(1);
-            double price = applyTaxes(Double.parseDouble(match.group(2)));
+            double taxGroup = applyTaxes(Double.parseDouble(match.group(2)));
+            double price = applyTaxes(Double.parseDouble(match.group(3)));
 
             if (itemMap.containsKey(itemName)) {
                 itemMap.put(itemName, itemMap.get(itemName) + price);
@@ -32,13 +34,13 @@ public class ReceiptReader {
         }
 
         var sb = new StringBuilder();
-        for(var entry : itemMap.entrySet()) {
+        for (var entry : itemMap.entrySet()) {
             sb.append(String.format("%s: $%.2f%n", entry.getKey(), entry.getValue()));
         }
         return sb.toString();
     }
 
     private double applyTaxes(double originalPrice) {
-        return originalPrice * (1 + taxes);
+        return originalPrice + taxCalculator.calculateTaxedPrice(originalPrice, 0);
     }
 }

@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 
 import java.util.Iterator;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReceiptReaderTest {
@@ -13,7 +14,7 @@ class ReceiptReaderTest {
 
     @Test
     void testReadReceipt() throws LineError {
-        String basicFile = "[apple:$4]\n[apple:$2]\n[pear:$3]";
+        String basicFile = "[apple:0:$4]\n[apple:0:$2]\n[pear:0:$3]";
 
         Mockito.when(fileReader.iterator()).thenReturn(new FileIterator(basicFile));
 
@@ -21,7 +22,7 @@ class ReceiptReaderTest {
         String result = receiptReader.readReceipt();
 
         Mockito.verify(fileReader).readFile("receipt.txt");
-        assertTrue(result.contains("apple: $30"));
+        assertThat(result).contains("apple: $30");
     }
 
     private class FileIterator implements Iterator<String> {
