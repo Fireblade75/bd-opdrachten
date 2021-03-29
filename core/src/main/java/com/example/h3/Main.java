@@ -57,7 +57,7 @@ public class Main {
         main.o4();
         main.o6();
 
-        long k = (0xFF000000L << 8) + 27;
+        long k = (0xFF00_0000L << 8) + 27;
         System.out.println(k);
         System.out.println((int) k);
     }
