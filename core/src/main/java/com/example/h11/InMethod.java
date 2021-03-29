@@ -18,14 +18,20 @@ public class InMethod {
                 return word.length();
             }
         });
+        count(word -> {
+                // do soemthing
+                return word.length();
+            }
+        );
         count(word -> word.length());
         count(String::length);
+
+        Function<String, Integer> getSize = s -> s.length();
     }
 
     static void count(Counter counter) {
         Function<Integer,Double> log4 = i -> Math.log(i) / Math.log(4);
-        var res = log4.apply(counter.count("thing"));
-        System.out.println(res);
+        System.out.println(counter.count("Bob!"));
     }
 
 
