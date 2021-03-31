@@ -1,9 +1,8 @@
-package com.example.tdd.traject;
+package com.example.tdd2.traject;
 
-import com.example.tdd.InvalidLocationException;
+import com.example.tdd2.InvalidLocationException;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 public class Traject {

@@ -21,7 +21,7 @@ class PersonTest {
         Person person = new Person("Bob");
 
         Arrays.stream(person.getClass().getMethods())
-                .filter(method -> method.getName().equals("greet"))
+                .filter(method -> method.getName().equals("getGreeting"))
                 .findFirst().ifPresentOrElse(greet -> {
                     assertEquals(greet.getAnnotations().length, 0);
                     assertFalse(greet.isAnnotationPresent(MyAnnotation2.class));

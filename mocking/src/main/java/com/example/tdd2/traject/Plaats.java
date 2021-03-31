@@ -1,4 +1,4 @@
-package com.example.tdd.traject;
+package com.example.tdd2.traject;
 
 public enum Plaats {
     AMSTERDAM,

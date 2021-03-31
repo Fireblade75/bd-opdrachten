@@ -56,11 +56,3 @@ public class Person {
         return String.format("%s (%d) is %s", name, age, gender);
     }
 }
-
-/**
- 1. Take the Person class from H8 and overload the constructor with one to which you can pass all the
- fields of a Person. Use constructor chaining to avoid code duplication.
- 2. Read the API-documentation (javadoc) of System.gc().
- 3. Create a finalizer and try to find out when this is called. Hint: you can use Thread.sleep(1000); to
- sleep for one second.
-*/

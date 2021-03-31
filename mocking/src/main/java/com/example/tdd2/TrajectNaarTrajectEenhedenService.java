@@ -1,7 +1,7 @@
-package com.example.tdd;
+package com.example.tdd2;
 
-import com.example.tdd.traject.Plaats;
-import com.example.tdd.traject.Traject;
+import com.example.tdd2.traject.Plaats;
+import com.example.tdd2.traject.Traject;
 
 import java.util.ArrayList;
 import java.util.List;

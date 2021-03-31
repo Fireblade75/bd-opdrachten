@@ -6,7 +6,7 @@ public class Employee extends Person{
     }
 
     @Override
-    public void greet() {
-        System.out.println("I'm tired of working. This is inhuman!.");
+    public String getGreeting() {
+        return "I'm tired of working. This is inhuman!.";
     }
 }

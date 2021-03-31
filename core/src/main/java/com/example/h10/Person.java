@@ -8,7 +8,12 @@ public class Person extends Human {
     }
 
     @Override
-    public void greet() {
-        System.out.printf("Hello, my name is %s. Nice to meet you!%n", name);
+    public String getGreeting() {
+        return String.format("Hello, my name is %s. Nice to meet you!", name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

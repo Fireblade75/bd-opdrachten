@@ -52,7 +52,12 @@
                 <version>${hamcrest.version}</version>
                 <scope>test</scope>
             </dependency>
-<!--            <dependency>-->
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>20.1.0</version>
+            </dependency>
+            <!--            <dependency>-->
 <!--                <groupId>org.slf4j</groupId>-->
 <!--                <artifactId>slf4j-api</artifactId>-->
 <!--                <version>1.7.30</version>-->
@@ -142,5 +147,6 @@
         <module>bank-app</module>
         <module>mocking</module>
         <module>task-manager</module>
+        <module>di-project</module>
     </modules>
 </project>

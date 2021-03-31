@@ -5,8 +5,8 @@ public class Android extends Human implements Chargeable {
     private int level = 0;
 
     @Override
-    public void greet() {
-        System.out.printf("I'm only half human, but human still.... My energy level is %d%%%n", level);
+    public String getGreeting() {
+        return String.format("I'm only half human, but human still.... My energy level is %d%%", level);
     }
 
     @Override
