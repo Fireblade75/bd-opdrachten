@@ -5,7 +5,7 @@ import com.example.di.Inject;
 public class AdderImpl implements Adder {
 
     @Inject
-    private ParserImpl parser;
+    private Parser parser;
 
     @Override
     public int add(String val1, String val2) {
