@@ -27,17 +27,26 @@ public class DepManager {
      * @param abstractClass the interface or abstract class
      * @param implClass the implementation to use
      */
-    public void link(Class abstractClass, Class implClass) {
+    public <T, V extends T> void link(Class<T> abstractClass, Class<V> implClass) {
         if(!abstractClass.isAssignableFrom(implClass)) {
             throw new RuntimeException(String.format("%s is not an implementation for %s", implClass.getName(), abstractClass.getName()));
         }
-        abstractMappings.put(abstractClass.getName(), implClass);
+        abstractMappings.put(abstractClass.getName(), (Class) implClass);
+    }
+
+    /**
+     * Bind an instance to a class or interface
+     * @param type the class that the instance is bound to
+     * @param instance the instance of the class
+     */
+    public <T> void link(Class<T> type, T instance) {
+        dependencyMap.put(type.getName(), instance);
     }
 
     private void resolveDependencies(Object target) {
         for(Field field : target.getClass().getDeclaredFields()) {
             if(field.isAnnotationPresent(Inject.class)) {
-                Class requestedClass = field.getType();
+                Class<?> requestedClass = field.getType();
                 field.setAccessible(true);
                 try {
                     field.set(target, getInstance(requestedClass));

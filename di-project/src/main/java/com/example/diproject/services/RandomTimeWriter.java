@@ -1,6 +1,7 @@
 package com.example.diproject.services;
 
 import com.example.di.Inject;
+import com.example.diproject.services.logger.BasicLogger;
 
 import java.util.Random;
 
@@ -12,10 +13,14 @@ public class RandomTimeWriter {
     @Inject
     private Random random;
 
+    @Inject
+    private BasicLogger logger;
+
     public void writeToConsole(Object line) {
         int minutes = random.nextInt(MAX_MINUTES);
         int seconds = random.nextInt(MAX_SECOND);
 
-        System.out.printf("[%02d:%02d] %s%n", minutes, seconds, line.toString());
+        String logLine = String.format("[%02d:%02d] %s", minutes, seconds, line.toString());
+        logger.info(getClass(), logLine);
     }
 }
