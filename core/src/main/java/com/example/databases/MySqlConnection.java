@@ -15,7 +15,7 @@ public class MySqlConnection implements AutoCloseable {
 
         con = DriverManager.getConnection("jdbc:mysql://localhost:3306?" +
                 "user=root&password=" + sqlPassword);
-
+        
     }
 
     protected Connection getConnection() {
