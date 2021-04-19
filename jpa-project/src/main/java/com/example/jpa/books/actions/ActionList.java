@@ -1,0 +1,27 @@
+package com.example.jpa.books.actions;
+
+public class ActionList {
+
+    public static final String BUY_BOOK = "Buy book";
+    public static final String VIEW_SALES = "View sales";
+    public static final String EXIT = "Exit";
+
+    public static final int BUY_BOOK_INDEX = 0;
+    public static final int VIEW_SALES_INDEX = 1;
+    public static final int EXIT_INDEX = 2;
+
+    public static final String[] ACTION_LIST = new String[3];
+
+    static {
+        ACTION_LIST[BUY_BOOK_INDEX] = BUY_BOOK;
+        ACTION_LIST[VIEW_SALES_INDEX] = VIEW_SALES;
+        ACTION_LIST[EXIT_INDEX] = EXIT;
+    };
+
+    public static int indexOf(String action) {
+        for (int i = 0; i < ACTION_LIST.length; i++) {
+            if(action.equals(ACTION_LIST[i])) return i;
+        }
+        return -1;
+    }
+}

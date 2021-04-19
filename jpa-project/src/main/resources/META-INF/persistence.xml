@@ -9,14 +9,15 @@
         <class>com.example.jpa.books.model.BookAwardsEntity</class>
         <class>com.example.jpa.books.model.BookEditionEntity</class>
         <class>com.example.jpa.books.model.BookEntity</class>
+        <class>com.example.jpa.books.model.SalesEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bookstore"/>
             <property name="jta-data-source" value="jdbc/bookstore"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="robocode42"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/bookstore"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>

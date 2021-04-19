@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "book_editions", schema = "bookstore", catalog = "")
+@Table(name = "book_editions", schema = "bookstore")
 public class BookEditionEntity {
     private int editionId;
     private String editionLabel;
@@ -59,5 +59,10 @@ public class BookEditionEntity {
     @Override
     public int hashCode() {
         return Objects.hash(editionId, editionLabel, price);
+    }
+
+    @Override
+    public String toString() {
+        return editionLabel + " - $" + price;
     }
 }

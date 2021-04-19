@@ -40,7 +40,7 @@ public class BookEntity {
 
     @Override
     public String toString() {
-        return title + "- " + author.toString();
+        return title + " - " + author.toString();
     }
 
     @Override
