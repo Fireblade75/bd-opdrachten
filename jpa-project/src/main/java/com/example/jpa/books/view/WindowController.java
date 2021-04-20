@@ -38,6 +38,9 @@ public class WindowController {
                 case ActionList.UNDO_LAST_SALE_INDEX:
                     salesActions.undoLastSale();
                     break;
+                case ActionList.MODIFY_BOOK_PRICE_INDEX:
+                    bookActions.modifyPrice();
+                    break;
                 case ActionList.EXIT_INDEX:
                     running = false;
                     break;

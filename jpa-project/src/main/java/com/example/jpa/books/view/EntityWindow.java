@@ -3,6 +3,7 @@ package com.example.jpa.books.view;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -38,14 +39,14 @@ public class EntityWindow extends BaseWindow implements AutoCloseable {
         return readBool();
     }
 
-    public double askForDouble(String label) {
-        return askForDouble(label, null, null);
+    public BigDecimal askForBigDecimal(String label) {
+        return askForBigDecimal(label, null, null);
     }
 
-    public double askForDouble(String label, Predicate<Double> requirement, String errorMessage) {
+    public BigDecimal askForBigDecimal(String label, Predicate<BigDecimal> requirement, String errorMessage) {
         displayLine(label);
         while (true) {
-            double value = readDouble();
+            BigDecimal value = readBigDecimal();
             if(requirement == null || requirement.test(value)) {
                 return value;
             } else {

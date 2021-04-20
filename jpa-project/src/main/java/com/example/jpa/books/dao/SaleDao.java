@@ -7,8 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class SalesDao {
+public class SaleDao extends BaseDao<SaleEntity> {
     public static final EntityManager em =
             Persistence.createEntityManagerFactory("bookstore").createEntityManager();
 
@@ -20,12 +21,16 @@ public class SalesDao {
         em.persist(sale);
         em.getTransaction().commit();
         em.refresh(sale);
+        em.detach(sale);
     }
 
     public List<SaleEntity> getLastSales(int amount) {
-        return em.createQuery("SELECT s FROM SaleEntity s ORDER BY s.saleDate DESC", SaleEntity.class)
+        return em.createQuery(
+                    "SELECT s FROM SaleEntity s ORDER BY s.saleDate DESC", SaleEntity.class)
                 .setMaxResults(amount)
-                .getResultList();
+                .getResultStream()
+                .peek(em::detach)
+                .collect(Collectors.toList());
     }
 
     public Optional<SaleEntity> removeLastSale() {

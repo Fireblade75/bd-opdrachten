@@ -1,6 +1,6 @@
 package com.example.jpa.books.actions;
 
-import com.example.jpa.books.dao.SalesDao;
+import com.example.jpa.books.dao.SaleDao;
 import com.example.jpa.books.model.SaleEntity;
 import com.example.jpa.books.view.EntityWindow;
 
@@ -14,7 +14,7 @@ public class SalesActions extends BaseAction {
     private EntityWindow window;
 
     @Inject
-    private SalesDao salesDao;
+    private SaleDao saleDao;
 
     public void performSale() {
         var author = requestAuthor();
@@ -24,17 +24,17 @@ public class SalesActions extends BaseAction {
         boolean accepted = window.askYesNoQuestion("Do you want to buy this book?");
 
         if(accepted) {
-            salesDao.addSale(bookEdition);
+            saleDao.addSale(bookEdition);
         }
     }
 
     public void viewSales() {
-        List<SaleEntity> salesEntities = salesDao.getLastSales(10);
+        List<SaleEntity> salesEntities = saleDao.getLastSales(10);
         window.displayEntities(salesEntities, "Recent sales:");
     }
 
     public void undoLastSale() {
-        Optional<SaleEntity> optionalSale = salesDao.removeLastSale();
+        Optional<SaleEntity> optionalSale = saleDao.removeLastSale();
         optionalSale.ifPresentOrElse(
                 (sale -> {
                     window.displayEntity(sale, "The following sale was removed:");

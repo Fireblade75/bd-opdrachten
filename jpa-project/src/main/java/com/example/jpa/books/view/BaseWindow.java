@@ -5,6 +5,7 @@ import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class BaseWindow implements AutoCloseable {
@@ -68,13 +69,23 @@ public class BaseWindow implements AutoCloseable {
     }
 
     protected double readDouble() {
-
         while (true) {
             displayCursor();
             try {
                 return Double.parseDouble(scanner.nextLine());
             } catch (NumberFormatException e) {
                 displayLine("ERR, expected a double (5.05)");
+            }
+        }
+    }
+
+    protected BigDecimal readBigDecimal() {
+        while (true) {
+            displayCursor();
+            try {
+                return new BigDecimal(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                displayLine("ERR, expected a decimal value (5.05)");
             }
         }
     }

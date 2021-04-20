@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class BookDao {
+public class BookDao extends BaseDao<BookEntity> {
 
     public static final EntityManager em =
             Persistence.createEntityManagerFactory("bookstore").createEntityManager();
@@ -15,7 +15,6 @@ public class BookDao {
     public List<BookEntity> getByAuthor(AuthorEntity author) {
         var query = em.createQuery("SELECT b FROM BookEntity b WHERE b.author = ?1", BookEntity.class);
         query.setParameter(1, author);
-        return query.getResultList();
+        return detachList(query.getResultList());
     }
-
 }

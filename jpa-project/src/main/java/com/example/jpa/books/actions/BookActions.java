@@ -6,6 +6,7 @@ import com.example.jpa.books.dao.EditionDao;
 import com.example.jpa.books.view.EntityWindow;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.util.function.Predicate;
 
 public class BookActions extends BaseAction {
@@ -28,9 +29,12 @@ public class BookActions extends BaseAction {
         var bookEdition = requestEditionFromBook(book);
 
         String label = "Give a new price for the book";
-        Predicate<Double> priceRequirement = value -> value > 0;
+        Predicate<BigDecimal> priceRequirement = value -> value.compareTo(BigDecimal.ZERO) > 0;
         String errorMessage = "Price must be more then $0.00";
-        double newPrice = window.askForDouble(label, priceRequirement, errorMessage);
+        BigDecimal newPrice = window.askForBigDecimal(label, priceRequirement, errorMessage);
 
+        bookEdition.setPrice(newPrice);
+        editionDao.update(bookEdition);
+        window.displayEntity(bookEdition, "The edition is updated:");
     }
 }
