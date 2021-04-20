@@ -22,7 +22,7 @@ public class BookEditionEntity {
         this.editionId = editionId;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     public BookEntity getBook() { return book; }
 

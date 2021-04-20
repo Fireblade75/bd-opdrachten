@@ -1,13 +1,12 @@
 package com.example.jpa.books.view;
 
-import com.example.jpa.books.actions.ActionList;
+import com.example.jpa.books.model.SaleEntity;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Window implements AutoCloseable {
@@ -44,11 +43,33 @@ public class Window implements AutoCloseable {
         }
     }
 
-
-
     public boolean askYesNoQuestion(String question) {
         writer.write(question + "\n");
         return readBool();
+    }
+
+    public void displayText(String text) {
+        writer.write(text + "\n");
+        writer.flush();
+    }
+
+    public <T> void displayEntity(T entity, String label) {
+        writer.write(label + "\n" + entity.toString() + "\n");
+        writer.flush();
+    }
+
+    public <T>  void displayEntities(List<T> entities, String label) {
+        StringBuilder sb = new StringBuilder(label).append("\n");
+        entities.forEach(sale ->
+                sb.append(sale.toString()).append("\n")
+        );
+        writer.print(sb.toString());
+        writer.flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        terminal.close();
     }
 
     private boolean readBool() {
@@ -79,11 +100,5 @@ public class Window implements AutoCloseable {
             }
         }
     }
-
-    @Override
-    public void close() throws IOException {
-        terminal.close();
-    }
-
 
 }

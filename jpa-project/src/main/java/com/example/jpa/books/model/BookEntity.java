@@ -30,7 +30,7 @@ public class BookEntity {
         this.title = title;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "author_id", nullable = true)
     public AuthorEntity getAuthor() { return author; }
 

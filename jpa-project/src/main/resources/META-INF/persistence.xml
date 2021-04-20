@@ -9,7 +9,7 @@
         <class>com.example.jpa.books.model.BookAwardsEntity</class>
         <class>com.example.jpa.books.model.BookEditionEntity</class>
         <class>com.example.jpa.books.model.BookEntity</class>
-        <class>com.example.jpa.books.model.SalesEntity</class>
+        <class>com.example.jpa.books.model.SaleEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bookstore"/>
             <property name="jta-data-source" value="jdbc/bookstore"/>

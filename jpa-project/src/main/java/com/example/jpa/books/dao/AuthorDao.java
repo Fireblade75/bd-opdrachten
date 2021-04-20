@@ -6,9 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public enum AuthorDao {
-
-    INSTANCE;
+public class AuthorDao {
 
     public static final EntityManager em =
             Persistence.createEntityManagerFactory("bookstore").createEntityManager();

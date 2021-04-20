@@ -1,14 +1,10 @@
 package com.example.jpa.books;
 
 import com.example.jpa.books.actions.ActionList;
-import com.example.jpa.books.actions.PerformSale;
-import com.example.jpa.books.actions.ViewSales;
-import com.example.jpa.books.dao.AuthorDao;
-import com.example.jpa.books.dao.BookDao;
-import com.example.jpa.books.dao.EditionDao;
-import com.example.jpa.books.model.AuthorEntity;
-import com.example.jpa.books.model.BookEntity;
+import com.example.jpa.books.actions.SalesActions;
 import com.example.jpa.books.view.Window;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,20 +17,25 @@ public class BooksMain {
 
     public static void main(String[] args) {
         try(Window window = new Window()) {
+            Injector injector = Guice.createInjector(binder -> {
+                binder.bind(Window.class).toInstance(window);
+            });
 
-            PerformSale performSale = new PerformSale(window);
+            SalesActions salesActions = injector.getInstance(SalesActions.class);
             List<String> actions = Arrays.asList(ActionList.ACTION_LIST);
-            ViewSales viewSales = new ViewSales();
 
             boolean running = true;
             while (running) {
                 int actionId = window.selectIdFromList(actions, "action");
                 switch (actionId) {
                     case ActionList.BUY_BOOK_INDEX:
-                        performSale.performSale();
+                        salesActions.performSale();
                         break;
                     case ActionList.VIEW_SALES_INDEX:
-                        viewSales.viewSales();
+                        salesActions.viewSales();
+                        break;
+                    case ActionList.UNDO_LAST_SALE_INDEX:
+                        salesActions.undoLastSale();
                         break;
                     case ActionList.EXIT_INDEX:
                         running = false;
@@ -46,16 +47,11 @@ public class BooksMain {
                             logger.error("Unknown action: " + actionId);
                         }
                 }
+                window.displayText("");
             }
         } catch (IOException e) {
             logger.error(e);
         }
-
-
-//        AuthorDao authorDao = AuthorDao.INSTANCE;
-//        var author = authorDao.get(1);
-//        System.out.println(author);
-//        logger.warn(author.getFirstName() + " " + author.getLastName());
     }
 
 }

@@ -5,19 +5,29 @@ import com.example.jpa.books.dao.BookDao;
 import com.example.jpa.books.dao.EditionDao;
 import com.example.jpa.books.dao.SalesDao;
 import com.example.jpa.books.model.BookEntity;
+import com.example.jpa.books.model.SaleEntity;
 import com.example.jpa.books.view.Window;
 
-public class PerformSale {
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Optional;
 
+public class SalesActions {
+
+    @Inject
     private Window window;
-    private AuthorDao authorDao = AuthorDao.INSTANCE;
-    private BookDao bookDao = BookDao.INSTANCE;
-    private EditionDao editionDao = EditionDao.INSTANCE;
-    private SalesDao salesDao = SalesDao.INSTANCE;
 
-    public PerformSale(Window window) {
-        this.window = window;
-    }
+    @Inject
+    private AuthorDao authorDao;
+
+    @Inject
+    private BookDao bookDao;
+
+    @Inject
+    private EditionDao editionDao;
+
+    @Inject
+    private SalesDao salesDao;
 
     public void performSale() {
         System.out.println("perform sale");
@@ -34,5 +44,22 @@ public class PerformSale {
         if(accepted) {
             salesDao.addSale(bookEdition);
         }
+    }
+
+    public void viewSales() {
+        List<SaleEntity> salesEntities = salesDao.getLastSales(10);
+        window.displayEntities(salesEntities, "Recent sales:");
+    }
+
+    public void undoLastSale() {
+        Optional<SaleEntity> optionalSale = salesDao.removeLastSale();
+        optionalSale.ifPresentOrElse(
+                (sale -> {
+                    window.displayEntity(sale, "The following sale was removed:");
+                }),
+                () -> {
+                    window.displayText("No sales found");
+                }
+        );
     }
 }
