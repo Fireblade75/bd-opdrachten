@@ -164,5 +164,6 @@
         <module>task-manager</module>
         <module>di-project</module>
         <module>jpa-project</module>
+        <module>office-beheer</module>
     </modules>
 </project>
