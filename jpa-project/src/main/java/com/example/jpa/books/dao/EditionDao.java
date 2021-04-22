@@ -5,6 +5,10 @@ import com.example.jpa.books.model.BookEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class EditionDao extends BaseDao<BookEditionEntity> {
@@ -18,4 +22,17 @@ public class EditionDao extends BaseDao<BookEditionEntity> {
         return detachList(query.getResultList());
     }
 
+    public List<BookEditionEntity> getByValue(String value) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+
+        // Maak de query en voeg de from toe
+        CriteriaQuery<BookEditionEntity> cq = cb.createQuery(BookEditionEntity.class);
+        Root<BookEditionEntity> from = cq.from(BookEditionEntity.class);
+
+        cq.select(from).where();
+
+        // Voer het request uit en geef het resultaat terug
+        TypedQuery<BookEditionEntity> q = em.createQuery(cq);
+        return q.getResultList();
+    }
 }

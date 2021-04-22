@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  java:
+    image: azul/zulu-openjdk-alpine:11-jre
+#    restart: always
+    volumes:
+      - ./target/office-app.jar:/opt/office-app.jar
+#    command: java -jar /opt/office-app.jar
+    command: tail -F anything
+    depends_on:
+      - db
+    networks:
+      - office-net
+    environment:
+      PERSISTENCE_UNIT: docker
+  db:
+    image: mysql:8.0.23
+    restart: always
+    networks:
+      - office-net
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_USER: javausr
+      MYSQL_PASSWORD: javapw
+      MYSQL_DATABASE: office
+networks:
+  office-net:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: 10.10.22.0/24
+          gateway: 10.10.22.1

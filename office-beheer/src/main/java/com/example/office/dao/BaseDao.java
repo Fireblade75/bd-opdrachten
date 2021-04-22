@@ -12,11 +12,11 @@ import java.util.List;
 
 public abstract class BaseDao<E> {
 
-//    @PersistenceContext
-//    protected static EntityManager em;
+    private static final String persistenceUnitName =
+            System.getenv("PERSISTENCE_UNIT") != null ? System.getenv("PERSISTENCE_UNIT") : "office";
 
     protected static final EntityManager em =
-            Persistence.createEntityManagerFactory("office").createEntityManager();
+            Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
 
     public E get(int id) {
         E e = em.find(E(), id);
