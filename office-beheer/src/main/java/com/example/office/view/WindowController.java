@@ -41,7 +41,7 @@ public class WindowController {
                 running = false;
             } else {
                 menuAction.runAction();
-//                window.displayLine("");
+                window.displayLine("");
             }
         }
     }

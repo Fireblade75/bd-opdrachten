@@ -6,9 +6,7 @@ import com.example.jpa.books.model.BookEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class EditionDao extends BaseDao<BookEditionEntity> {
@@ -22,17 +20,29 @@ public class EditionDao extends BaseDao<BookEditionEntity> {
         return detachList(query.getResultList());
     }
 
-    public List<BookEditionEntity> getByValue(String value) {
+    public List<BookEditionEntity> getByTitle(String title) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
 
         // Maak de query en voeg de from toe
         CriteriaQuery<BookEditionEntity> cq = cb.createQuery(BookEditionEntity.class);
-        Root<BookEditionEntity> from = cq.from(BookEditionEntity.class);
 
-        cq.select(from).where();
+        // Selecteer de tabellen
+        Root<BookEditionEntity> bookEntity = cq.from(BookEditionEntity.class);
+        Join<BookEditionEntity, BookEntity> book = bookEntity.join("book");
+
+        // Voeg de critera toe
+        cq.where(cb.equal(book.get("title"), title));
 
         // Voer het request uit en geef het resultaat terug
         TypedQuery<BookEditionEntity> q = em.createQuery(cq);
         return q.getResultList();
+    }
+
+    public static void main(String[] args) {
+        var dao = new EditionDao();
+        var books = dao.getByTitle("De sluwe haatster");
+
+        System.out.println(books.size());
+        books.forEach(System.out::println);
     }
 }

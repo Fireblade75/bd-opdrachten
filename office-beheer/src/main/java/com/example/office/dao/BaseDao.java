@@ -35,7 +35,7 @@ public abstract class BaseDao<E> {
 
     public void save(E e) {
         em.getTransaction().begin();
-        em.persist(e);
+        em.merge(e);
         em.getTransaction().commit();
     }
 

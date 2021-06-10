@@ -165,5 +165,6 @@
         <module>di-project</module>
         <module>jpa-project</module>
         <module>office-beheer</module>
+        <module>web</module>
     </modules>
 </project>
